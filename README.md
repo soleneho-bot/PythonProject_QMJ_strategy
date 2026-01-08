@@ -21,5 +21,6 @@ Les données fondamentales (Bilan, Compte de résultat) sont publiées avec un d
 ## Architecture du Dépôt
 * `/research` : Travaux de recherche. 
 * `/src` : Code source de production pour l'analyse quotidienne et la gestion de base de données.
+* `/data` : Autres fichiers de données
 * `requirements.txt` : Spécifications des dépendances logicielles.
 
