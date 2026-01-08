@@ -1,9 +1,11 @@
+streamlit
 pandas
 numpy
 yfinance
 sqlalchemy
 psycopg2-binary
-requests
+plotly
 scipy
-python-dotenv
+hurst
+requests
 lxml
