@@ -15,15 +15,11 @@ La stratégie repose sur l'exploitation du facteur Qualité par la construction 
 
 Les données fondamentales (Bilan, Compte de résultat) sont publiées avec un décalage temporel et ne changent qu'au rythme des trimestres. Pour pallier ce problème, nous avons donc décidé d’intégrer d’autres indicateurs, dont la mise à jour est plus régulière / quotidienne :  
 
-* **Analyse du Sentiment Spéculatif** : Utilisation des données Google Trends comme filtre de risque contre la volatilité spéculative, suivant les travaux de Preis, Moat, and Stanley (2013).
 * **Exposant de Hurst (Analyse R/S)** : Application des théories de Mandelbrot (1963) pour mesurer la persistance des tendances et distinguer la croissance structurelle du bruit transactionnel.
 * **Risque de Crédit Implicite** : Mesure de la corrélation avec l'ETF HYG (High Yield) pour isoler les composantes de dette risquée au sein de l'equity, conformément au modèle de Merton (1974).
 
 ## Architecture du Dépôt
-* `/research` : Travaux de recherche et implémentation du Backtesting (Jupyter Notebook).
+* `/research` : Travaux de recherche. 
 * `/src` : Code source de production pour l'analyse quotidienne et la gestion de base de données.
 * `requirements.txt` : Spécifications des dépendances logicielles.
 
-## Installation
-```bash
-pip install -r requirements.txt
