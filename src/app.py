@@ -427,13 +427,13 @@ elif page == "3. Nos Innovations":
     st.write("---")
     st.subheader("✅ Les 2 Piliers Ajoutés (Implémentés)")
     
-    tab_hurst, tab_toxic = st.tabs(["1. Persistance (Hurst)", "2. Crédit Implicite (Toxic)"])
+    tab_hurst, tab_toxic = st.tabs(["1. Persistance (Hurst)", "2. Crédit Implicite (Toxic Correlation)"])
     
     with tab_hurst:
         col_h1, col_h2 = st.columns([1, 1])
         with col_h1:
             st.markdown("### 🌊 L'Exposant de Hurst")
-            st.markdown("**Concept :** Mesure la mémoire à long terme d'une série temporelle.")
+            st.markdown("**Concept :** Mesure la mémoire à long terme d'une série temporelle. Il permet de savoir si un marché : est aléatoire / présente une tendance persistante / ou un comportement de retour à la moyenne")
             st.success("""
             * **H > 0.5 (Notre Cible) :** "Compounders". La tendance est persistante. La performance vient d'un avantage durable (Moat).
             * **H ≤ 0.5 (Exclu) :** Mouvement brownien (bruit) ou retour à la moyenne violent.
@@ -463,20 +463,39 @@ elif page == "3. Nos Innovations":
 
     with st.expander("Voir les pistes abandonnées (Google Trends, Smart Money, etc.)"):
         st.markdown("""
-        ### 1. Le Sentiment Spéculatif (Google Trends)
+        ### 1. Le Sentiment Spéculatif (Google Trends & GDELT)
         * **Hypothèse :** Un pic de recherche sur un ticker = Activité "Retail" spéculative (Signe de bulle/Junk).
         * **Référence :** Preis, Moat, & Stanley (2013).
-        * **Pourquoi abandonné ?** Instabilité de l'API Google et difficulté à normaliser les données "Hype" en temps réel.
+        * **Pourquoi abandonné ?** Instabilité de l'API Google avec beaucoup d'errerurs et difficulté à normaliser les données "Hype" en temps réel. 
+                                   Le volume de données GDELT est titanesque. Isoler le sentiment lié spécifiquement à un ticker 
+                                  (et pas à une homonymie) demandait des modèles NLP (Traitement du Langage Naturel) trop lourds 
+                                  pour un script quotidien.
 
         ### 2. Le Smart Money (Short Interest)
         * **Hypothèse :** Les vendeurs à découvert sont les investisseurs les mieux informés.
-        * **Règle testée :** Exclure tout titre dont >15% du flottant est shorté.
-        * **Statut :** Gardé comme filtre manuel "Red Flag" mais pas dans le score automatique.
+        * **Règle testée :** Exclure tout titre dont >15% du flottant est shorté (les titres massivement vendus à découvert par les hedge funds).
+        * **Statut :** Le manque de Data. Les données de Short Interest gratuites sont souvent retardées de 15 jours, ce qui annulait l'intérêt d'un indicateur "dynamique".
 
         ### 3. Le Score Global de Synthèse (RVI + Pression)
         * **Idée :** Combiner Hype (Volume), Pression (Prix/Volume) et Tendance (MA50) en un seul score via une fonction `tanh`.
-        * **Résultat :** Trop complexe et redondant avec le Hurst Exponent.
+        * **Résultat :** Alternative aux "Google Trends" car, en bourse, un pic de volume précède souvent un mouvement de prix majeur. Trop complexe et redondant avec le Hurst Exponent.
+        
+        ### 4. Lottery Ticket 
+        * **Idée :** Les actions ayant des hausses quotidiennes extrêmes sont spéculatives (Junk) et sous-performent.
+        * **Référence :** Bali, Cakici, & Whitelaw (2011)
+        * **Résultat :** Pénalité de Score : Plus le rendement max sur 21 jours est élevé, plus le score "Safety" diminue.
+                    
+        ### 5. Skin in the Game 
+        * **Idée :** Les dirigeants n'achètent des actions que s'ils sont convaincus de la sous-évaluation ou de la croissance future.
+        * **Référence :** N. Taleb 
+        * **Résultat :** Bonus de Score : Un achat net des dirigeants sur 6 mois augmente le score "Quality" du titre.
+
+        ### 6. Beneish M-Score 
+        * **Idée :** Détecter les manipulations de profits avant qu'elles ne soient publiques.
+        * **Résultat :** Filtre Binaire : Le score combine 8 ratios (croissance des ventes suspecte, dépréciation anormale, levier, etc.). Si M > -1.78, l'action est marquée "Red Flag" et exclue du portefeuille Long.
         """)
+
+        
 
     # --- 4. TABLEAU RÉCAPITULATIF ---
     st.write("---")
